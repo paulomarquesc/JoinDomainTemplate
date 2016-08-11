@@ -25,13 +25,6 @@
             "metadata": {
                 "description": "Domain FQDN where the virtual machine will be joined."
             }
-        },
-        "ouPath": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Specifies an organizational unit (OU) for the domain account. Enter the full distinguished name of the OU in quotation marks. Example: 'OU=testOU; DC=domain; DC=Domain; DC=com"
-            }
         }
     },
     "variables": {
@@ -52,8 +45,7 @@
                     "Name": "[parameters('domainFQDN')]",
                     "User": "[concat(parameters('domainFQDN'), '\\', parameters('DomainJoinUserName'))]",
                     "Restart": "true",
-                    "Options": "[variables('domainJoinOptions')]",
-                    "OUPath": "[parameters('ouPath')]"
+                    "Options": "[variables('domainJoinOptions')]"
                 },
                 "protectedsettings": {
                     "Password": "[parameters('DomainJoinUserPassword')]"
