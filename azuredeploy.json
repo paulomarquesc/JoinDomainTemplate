@@ -11,7 +11,7 @@
         "DomainJoinUserName": {
             "type": "string",
             "metadata": {
-                "description": "User name of a domain user with sufficient rights to perfom domain join operation."
+                "description": "Domain NetBiosName plus User name of a domain user with sufficient rights to perfom domain join operation. E.g. domain\\username "
             }
         },
         "DomainJoinUserPassword": {
@@ -44,7 +44,7 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "Name": "[parameters('domainFQDN')]",
-                    "User": "[concat(parameters('domainFQDN'), '\\', parameters('DomainJoinUserName'))]",
+                    "User": "[parameters('DomainJoinUserName')]",
                     "Restart": "true",
                     "Options": "[variables('domainJoinOptions')]"
                 },
