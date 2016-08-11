@@ -8,12 +8,6 @@
                 "description": "Virtual machine to be domain joined."
             }
         },
-        "resourceGroup": {
-            "type": "string",
-            "metadata": {
-                "description": "Virtual machine's resource group name."
-            }
-        },
         "DomainJoinUserName": {
             "type": "string",
             "metadata": {
