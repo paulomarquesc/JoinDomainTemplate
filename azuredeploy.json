@@ -38,7 +38,6 @@
         "domainJoinOptions": 3
     },
     "resources": [
-        // Join domain - Json AD Domain Extension
         {
             "comments": "Join domain - JsonADDomainExtension",
             "apiVersion": "2015-06-15",
