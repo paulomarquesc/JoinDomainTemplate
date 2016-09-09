@@ -3,7 +3,8 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "vmName": {
-            "type": "string",
+            "type": "array",
+            "minLength": 1,
             "metadata": {
                 "description": "Virtual machine to be domain joined"
             }
@@ -14,13 +15,13 @@
                 "description":"Location name of the virtual machine"
             }
         },
-        "DomainJoinUserName": {
+        "domainJoinUserName": {
             "type": "string",
             "metadata": {
                 "description": "Domain NetBiosName plus User name of a domain user with sufficient rights to perfom domain join operation. E.g. domain\\username"
             }
         },
-        "DomainJoinUserPassword": {
+        "domainJoinUserPassword": {
             "type": "securestring",
             "metadata": {
                 "description": "Domain user password"
@@ -48,8 +49,12 @@
             "comments": "Join domain - JsonADDomainExtension",
             "apiVersion": "2015-06-15",
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(parameters('vmName'),'/joindomain')]",
+            "name": "[concat(parameters('vmName')[copyIndex()],'/joindomain')]",
             "location": "[parameters('location')]",
+            "copy": {
+                "name": "vmList",
+                "count": "[length(parameters('vmName'))]"
+            },
             "properties": {
                 "publisher": "Microsoft.Compute",
                 "type": "JsonADDomainExtension",
@@ -57,13 +62,13 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "Name": "[parameters('domainFQDN')]",
-                    "User": "[parameters('DomainJoinUserName')]",
+                    "User": "[parameters('domainJoinUserName')]",
                     "Restart": "true",
                     "Options": "[variables('domainJoinOptions')]",
                     "OUPath": "[parameters('ouPath')]"
                 },
                 "protectedsettings": {
-                    "Password": "[parameters('DomainJoinUserPassword')]"
+                    "Password": "[parameters('domainJoinUserPassword')]"
                 }
             }
         }
